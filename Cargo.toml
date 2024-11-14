@@ -3,4 +3,27 @@ name = "rust-uniffi-rn-demo"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+crate-type = ["lib", "staticlib", "cdylib"]
+name = "demoffi"
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "uniffi_bindgen.rs"
+
+[features]
+default = ["uniffi/cli"]
+
 [dependencies]
+uniffi = { version = "0.28.2" }
+
+[build-dependencies]
+uniffi = { version = "0.28.2", features = ["build"] }
+
+[profile.release-smaller]
+inherits = "release"
+opt-level = 'z'     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations.
+panic = "abort"     # Abort on panic
+strip = "debuginfo" # Partially strip symbols from binary
