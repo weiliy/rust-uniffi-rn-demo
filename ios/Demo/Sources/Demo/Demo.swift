@@ -452,7 +452,7 @@ fileprivate struct FfiConverterString: FfiConverter {
         writeBytes(&buf, value.utf8)
     }
 }
-public func add(_ a: UInt64, _ b: UInt64) -> UInt64 {
+public func add(a: UInt64, b: UInt64) -> UInt64 {
     return try!  FfiConverterUInt64.lift(try! rustCall() {
     uniffi_demoffi_fn_func_add(
         FfiConverterUInt64.lower(a),

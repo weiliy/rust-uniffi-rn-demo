@@ -17,7 +17,7 @@ define log
 endef
 
 .PHONY: build
-build: build-ios build-macos generate build-xcframework
+build: build-ios build-macos generate build-xcframework build-swift-package
 
 .PHONY: clean
 clean:
@@ -68,3 +68,7 @@ build-xcframework:
 		-library "target/aarch64-apple-ios/${RELDIR}/$(STATIC_LIB_NAME)" \
 		-headers "target/include" \
 		-output "ios/Demo/demoffi.xcframework"
+
+build-swift-package:
+	$(call log, "Build Swift Package")
+	cd ios/Demo && swift build
