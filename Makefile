@@ -23,7 +23,9 @@ build: build-ios build-macos generate build-xcframework build-swift-package
 clean:
 	cargo clean
 
-generate: target/include
+generate: generate-swift
+
+generate-swift: target/include
 	$(call log, "Generate Swift bindings")
 	cargo run --bin uniffi-bindgen generate src/demo.udl --language swift --out-dir ios/Demo/Sources/Demo --no-format
 	mv ios/Demo/Sources/Demo/demoFFI.h target/include/demoFFI.h
@@ -59,7 +61,7 @@ build-macos-%:
 	cargo build  --profile $(RELDIR) --target $*
 
 
-build-xcframework:
+build-xcframework: generate-swift
 	$(call log, "Build iOS XCFramework")
 	rm -rf ios/Demo/demoffi.xcframework
 	xcodebuild -create-xcframework \
@@ -69,6 +71,12 @@ build-xcframework:
 		-headers "target/include" \
 		-output "ios/Demo/demoffi.xcframework"
 
-build-swift-package:
+build-swift-package: build-xcframework
 	$(call log, "Build Swift Package")
 	cd ios/Demo && swift build
+
+build-rn-package: build-xcframework
+	$(call log, "Build React Native Package")
+	cp -f ios/Demo/Sources/Demo/demo.swift rn/demo-rn/ios/demo.swift
+	rm -rf rn/demo-rn/ios/demoffi.xcframework && cp -r ios/Demo/demoffi.xcframework rn/demo-rn/ios/demoffi.xcframework
+	cd rn/demo-rn && yarn clean && yarn lint && yarn prepare

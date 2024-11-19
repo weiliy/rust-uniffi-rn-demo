@@ -5203,12 +5203,23 @@ __metadata:
     "@react-native/metro-config": 0.76.2
     "@react-native/typescript-config": 0.76.2
     "@rnx-kit/metro-config": ^2.0.0
+    demo-rn: "file:../"
     react: 18.3.1
     react-native: 0.76.2
     react-native-builder-bob: ^0.31.0
     react-native-test-app: ^4.0.1
   languageName: unknown
   linkType: soft
+
+"demo-rn@file:../::locator=demo-rn-example%40workspace%3Aexample":
+  version: 0.1.0
+  resolution: "demo-rn@file:../#../::hash=98006d&locator=demo-rn-example%40workspace%3Aexample"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: fada5a55e5673926f704a46bb9eb30e9852401051b565430f5f2fce06b8dd8481c9c54b485a92d261aa5e3bfb6c142bb8ff452ace0d7c03dac43903f516ff139
+  languageName: node
+  linkType: hard
 
 "demo-rn@workspace:.":
   version: 0.0.0-use.local
